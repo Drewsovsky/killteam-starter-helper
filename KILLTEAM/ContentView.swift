@@ -7,106 +7,113 @@
 
 import SwiftUI
 
-struct Unit : Hashable, Identifiable {
-    
-    var id: UUID = UUID.init()
-    
-    let title: String
-    let APL: Int
-    let move: Int
-    let save: Int
-    let wounds: Int
-}
-
 struct ContentView: View {
-    let squad: [Unit] = [
-        Unit(title: "Space Marine Captain", APL: 3, move: 6, save: 3, wounds: 15),
-        Unit(title: "Intercessor Sergant", APL: 3, move: 6, save: 3, wounds: 15),
-        Unit(title: "Assault Intercessor Warrior", APL: 3, move: 6, save: 3, wounds: 14),
-        Unit(title: "Heavy Intercessor Gunner", APL: 3, move: 4, save: 3, wounds: 14),
-        Unit(title: "Intercessor Warrior", APL: 3, move: 6, save: 3, wounds: 14),
-        Unit(title: "Intercessor Warrior", APL: 3, move: 6, save: 3, wounds: 14),
-        Unit(title: "Eliminator Sniper", APL: 3, move: 7, save: 3, wounds: 12)
-    ]
     
-    @State private var selectedUnit: Unit?
+    let viewModel: KillteamViewModel
     
     var body: some View {
-        VStack {
+        NavigationStack {
+            switch viewModel.state {
+            case .loading, .idle:
+                ProgressView("Loading roster...")
+            case .failed(let error):
+                Text("Error: \(error)")
+            case .loaded(let killteam):
+                SquadContentView(squad: killteam.squad)
+            }
+        }
+        .task {
+            await viewModel.fetch()
+        }
+    }
+    
+    struct SquadContentView : View {
+        
+        var squad: [Unit]
+        
+        @State private var selectedUnit: Unit?
+        
+        var body: some View {
+            VStack(spacing: 0) {
+                pagingControl
+                dataCardsPager
+            }
+            .onAppear {
+                if selectedUnit == nil {
+                    selectedUnit = squad.first
+                }
+            }
+        }
+        
+        private var pagingControl: some View {
             HStack {
                 ScrollView(.horizontal, showsIndicators: false) {
-                    pagingControl
-                        .padding()
+                    HStack {
+                        ForEach(squad) { unit in
+                            Button {
+                                withAnimation {
+                                    selectedUnit = unit
+                                }
+                            } label : {
+                                Text(unit.title.prefix(1))
+                                    .frame(width: 50, height: 50)
+                                    .background(selectedUnit == unit ? .green : .black)
+                                    .foregroundColor(.white)
+                            }
+                        }
+                    }
+                    .padding(.horizontal)
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: 50, alignment: .center)
+            .frame(height: 60)
             .background(.orange)
-            
-            ScrollView(.horizontal) {
-                HStack {
-                    ForEach(squad, id: \.self) { unit in
-                        cardView(for: unit)
-                    }
-                    .containerRelativeFrame(.horizontal, count: 1, spacing: 0)
-                }
-                .frame(maxHeight: .infinity, alignment: .top)
-                .scrollTargetLayout()
-            }
-            .frame(maxHeight: .infinity)
-            .scrollTargetBehavior(.viewAligned)
-            .scrollPosition(id: $selectedUnit)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(.cyan)
-        .task {
-            guard !squad.isEmpty else { return }
-            
-            selectedUnit = squad[0]
-        }
-    }
-    
-    private func cardView(for unit: Unit) -> some View {
-        VStack {
-            Text(unit.title)
-                .font(.title)
+        
+        private var dataCardsPager: some View {
             HStack {
-                Spacer()
-                VStack {
-                    Grid {
-                        GridRow {
-                            statCell(title: "APL", value: String(unit.APL))
-                            statCell(title: "Move", value: String(unit.move))
+                ScrollView(.horizontal) {
+                    HStack {
+                        ForEach(squad) { unit in
+                            cardView(for: unit)
+                                .id(unit)
                         }
-                        GridRow {
-                            statCell(title: "Save", value: String(unit.save))
-                            statCell(title: "Wounds", value: String(unit.wounds))
+                        .containerRelativeFrame(.horizontal, count: 1, spacing: 0)
+                    }
+                    .frame(maxHeight: .infinity, alignment: .top)
+                    .scrollTargetLayout()
+                }
+                .frame(maxHeight: .infinity)
+                .scrollTargetBehavior(.viewAligned)
+                .scrollPosition(id: $selectedUnit)
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(.cyan)
+        }
+        
+        private func cardView(for unit: Unit) -> some View {
+            VStack {
+                Text(unit.title)
+                    .font(.title)
+                HStack {
+                    Spacer()
+                    VStack {
+                        Grid {
+                            GridRow {
+                                statCell(title: "APL", value: String(unit.APL))
+                                statCell(title: "Move", value: String(unit.move))
+                            }
+                            GridRow {
+                                statCell(title: "Save", value: String(unit.save))
+                                statCell(title: "Wounds", value: String(unit.wounds))
+                            }
                         }
                     }
                 }
             }
         }
-    }
-    
-    private var pagingControl: some View {
-        HStack {
-            ForEach(squad) { unit in
-                Button {
-                    withAnimation {
-                        selectedUnit = unit
-                    }
-                } label : {
-                    Text(unit.title.prefix(1))
-                        .frame(width: 50, height: 50)
-                        .background(selectedUnit == unit ? .green : .black)
-                        .foregroundColor(.white)
-                }
-            }
-        }
-    }
-    
-    @ViewBuilder
-    private func statCell(title: String, value: String) -> some View {
-        VStack {
+        
+        @ViewBuilder
+        private func statCell(title: String, value: String) -> some View {
             Text(title)
             Text(value)
         }
@@ -115,5 +122,7 @@ struct ContentView: View {
 
 
 #Preview {
-    ContentView()
+    ContentView(
+        viewModel: KillteamViewModel(
+            killteamRepository: KillteamLocalRepository()))
 }

@@ -11,7 +11,7 @@ import SwiftUI
 struct KILLTEAMApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            //ContentView()
         }
     }
 }

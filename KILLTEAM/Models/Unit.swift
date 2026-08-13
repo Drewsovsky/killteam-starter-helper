@@ -10,7 +10,7 @@ import SwiftUI
 
 struct Unit : Hashable, Identifiable {
     
-    var id: UUID
+    let id: UUID
     
     let title: String
     let apl: Int
@@ -20,11 +20,11 @@ struct Unit : Hashable, Identifiable {
     let imageName: String
     
     // MARK: For UI
-    let currentWounds: Int
+    var currentWounds: Int
     var imagePath: String?
     
     init(
-        id: UUID = UUID.init(),
+        id: UUID,
         title: String,
         apl: Int,
         move: Int,

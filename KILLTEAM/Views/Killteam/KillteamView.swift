@@ -50,7 +50,7 @@ struct KillteamView: View {
         
         var squad: [Unit]
         
-        @State private var selectedUnit: Unit?
+        @State private var selectedUnitID: UUID?
         
         var body: some View {
             VStack(spacing: 0) {
@@ -93,8 +93,10 @@ struct KillteamView: View {
                 ScrollView(.horizontal) {
                     HStack {
                         ForEach(squad) { unit in
-                            cardView(for: unit)
-                                .id(unit)
+                            cardView(unit: squad) { unitId, delta in
+                                viewModel.changeWounds(for: unitID, by: delta)
+                            }
+                            .id(unit)
                         }
                         .containerRelativeFrame(.horizontal, count: 1, spacing: 0)
                     }
@@ -103,45 +105,58 @@ struct KillteamView: View {
                 }
                 .frame(maxHeight: .infinity)
                 .scrollTargetBehavior(.viewAligned)
-                .scrollPosition(id: $selectedUnit)
+                .scrollPosition(id: $selectedUnitId)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(.cyan)
         }
         
-        private func cardView(for unit: Unit) -> some View {
-            VStack {
-                Text(unit.title)
-                    .font(.title)
-                HStack(alignment: .top) {
-                    Image(unit.imageName)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(maxWidth: .infinity)
-                    VStack(alignment: .leading) {
-                        Grid {
-                            GridRow {
-                                statCell(title: "APL", value: String(unit.apl))
-                                statCell(title: "Move", value: String(unit.move))
+        struct cardView: View {
+            let unit: Unit
+            let onWoundsChange: (Int) -> Void
+            
+            var body: some View {
+                VStack {
+                    Text(unit.title)
+                        .font(.title)
+                    HStack(alignment: .top) {
+                        Image(unit.imageName)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(maxWidth: .infinity)
+                        VStack(alignment: .leading) {
+                            Grid {
+                                GridRow {
+                                    statCell(title: "APL", value: String(unit.apl))
+                                    statCell(title: "Move", value: String(unit.move))
+                                }
+                                GridRow {
+                                    statCell(title: "Save", value: String(unit.save))
+                                    statCell(title: "Wounds", value: String(unit.wounds))
+                                }
                             }
-                            GridRow {
-                                statCell(title: "Save", value: String(unit.save))
-                                statCell(title: "Wounds", value: String(unit.wounds))
+                            VStack(alignment: .center) {
+                                Text("Wounds")
+                                HStack {
+                                    Button("-") { onWoundsChange(-1) }
+                                    Text("\(unit.currentWounds)/\(unit.wounds)")
+                                    Button("+") { onWoundsChange(1) }
+                                }
                             }
                         }
+                        .frame(maxWidth: .infinity)
                     }
-                    .frame(maxWidth: .infinity)
                 }
             }
-        }
-        
-        @ViewBuilder
-        private func statCell(title: String, value: String) -> some View {
-            VStack {
-                Text(title)
-                Text(value)
+            
+            @ViewBuilder
+            private func statCell(title: String, value: String) -> some View {
+                VStack {
+                    Text(title)
+                    Text(value)
+                }
+                .frame(maxWidth: .infinity)
             }
-            .frame(maxWidth: .infinity)
         }
     }
 }

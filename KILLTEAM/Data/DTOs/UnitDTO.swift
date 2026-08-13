@@ -5,6 +5,8 @@
 //  Created by Andrew Shakula on 13.08.2026.
 //
 
+import Foundation
+
 struct UnitDTO : Decodable {
     
     let title: String
@@ -22,6 +24,7 @@ struct UnitDTO : Decodable {
     
     func toDomain() -> Unit {
         Unit(
+            id: UUID.init(),
             title: title,
             apl: apl,
             move: move,

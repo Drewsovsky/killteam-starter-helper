@@ -7,5 +7,5 @@
 
 struct Killteam {
     let name: String
-    let squad: [Unit]
+    var squad: [Unit]
 }

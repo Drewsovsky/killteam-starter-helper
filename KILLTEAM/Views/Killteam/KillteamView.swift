@@ -32,6 +32,15 @@ struct KillteamView: View {
         }
         .navigationTitle(squadName)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar() {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    // TODO: open information block
+                } label : {
+                    Image(systemName: "info.circle")
+                }
+            }
+        }
         .task {
             await viewModel.fetch()
         }

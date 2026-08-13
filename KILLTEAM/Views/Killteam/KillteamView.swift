@@ -27,7 +27,9 @@ struct KillteamView: View {
             case .failed(let error):
                 Text("Error: \(error)")
             case .loaded(let killteam):
-                SquadContentView(squad: killteam.squad)
+                SquadContentView(squad: killteam.squad, onWoundsChange: { unitId, delta in
+                    viewModel.changeWounds(for: unitId, by: delta)
+                })
             }
         }
         .navigationTitle(squadName)
@@ -49,6 +51,7 @@ struct KillteamView: View {
     struct SquadContentView : View {
         
         var squad: [Unit]
+        var onWoundsChange: (UUID, Int) -> Void
         
         @State private var selectedUnitID: UUID?
         
@@ -58,8 +61,8 @@ struct KillteamView: View {
                 dataCardsPager
             }
             .onAppear {
-                if selectedUnit == nil {
-                    selectedUnit = squad.first
+                if selectedUnitID == nil {
+                    selectedUnitID = squad.first?.id
                 }
             }
         }
@@ -71,12 +74,12 @@ struct KillteamView: View {
                         ForEach(squad) { unit in
                             Button {
                                 withAnimation {
-                                    selectedUnit = unit
+                                    selectedUnitID = unit.id
                                 }
                             } label : {
                                 Text(unit.title.prefix(1))
                                     .frame(width: 50, height: 50)
-                                    .background(selectedUnit == unit ? .green : .black)
+                                    .background(selectedUnitID == unit.id ? .green : .black)
                                     .foregroundColor(.white)
                             }
                         }
@@ -93,10 +96,10 @@ struct KillteamView: View {
                 ScrollView(.horizontal) {
                     HStack {
                         ForEach(squad) { unit in
-                            cardView(unit: squad) { unitId, delta in
-                                viewModel.changeWounds(for: unitID, by: delta)
+                            cardView(unit: unit) { delta in
+                                onWoundsChange(unit.id, delta)
                             }
-                            .id(unit)
+                            .id(unit.id)
                         }
                         .containerRelativeFrame(.horizontal, count: 1, spacing: 0)
                     }
@@ -105,7 +108,7 @@ struct KillteamView: View {
                 }
                 .frame(maxHeight: .infinity)
                 .scrollTargetBehavior(.viewAligned)
-                .scrollPosition(id: $selectedUnitId)
+                .scrollPosition(id: $selectedUnitID)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(.cyan)
@@ -135,18 +138,20 @@ struct KillteamView: View {
                                     statCell(title: "Wounds", value: String(unit.wounds))
                                 }
                             }
-                            VStack(alignment: .center) {
-                                Text("Wounds")
-                                HStack {
-                                    Button("-") { onWoundsChange(-1) }
-                                    Text("\(unit.currentWounds)/\(unit.wounds)")
-                                    Button("+") { onWoundsChange(1) }
-                                }
-                            }
                         }
                         .frame(maxWidth: .infinity)
                     }
+                    HStack {
+                        Text("Wounds")
+                        Spacer()
+                        HStack {
+                            Button("-") { onWoundsChange(-1) }
+                            Text("\(unit.currentWounds)/\(unit.wounds)")
+                            Button("+") { onWoundsChange(1) }
+                        }
+                    }
                 }
+                .padding()
             }
             
             @ViewBuilder

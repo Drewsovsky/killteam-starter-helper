@@ -7,9 +7,17 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct KillteamView: View {
     
     let viewModel: KillteamViewModel
+    
+    private var squadName: String {
+        switch viewModel.state {
+        case .loaded(let killteam):
+            return killteam.name
+        default: return "Roster"
+        }
+    }
     
     var body: some View {
         NavigationStack {
@@ -22,6 +30,8 @@ struct ContentView: View {
                 SquadContentView(squad: killteam.squad)
             }
         }
+        .navigationTitle(squadName)
+        .navigationBarTitleDisplayMode(.inline)
         .task {
             await viewModel.fetch()
         }
@@ -94,12 +104,15 @@ struct ContentView: View {
             VStack {
                 Text(unit.title)
                     .font(.title)
-                HStack {
-                    Spacer()
-                    VStack {
+                HStack(alignment: .top) {
+                    Image(unit.imageName)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxWidth: .infinity)
+                    VStack(alignment: .leading) {
                         Grid {
                             GridRow {
-                                statCell(title: "APL", value: String(unit.APL))
+                                statCell(title: "APL", value: String(unit.apl))
                                 statCell(title: "Move", value: String(unit.move))
                             }
                             GridRow {
@@ -108,21 +121,25 @@ struct ContentView: View {
                             }
                         }
                     }
+                    .frame(maxWidth: .infinity)
                 }
             }
         }
         
         @ViewBuilder
         private func statCell(title: String, value: String) -> some View {
-            Text(title)
-            Text(value)
+            VStack {
+                Text(title)
+                Text(value)
+            }
+            .frame(maxWidth: .infinity)
         }
     }
 }
 
 
 #Preview {
-    ContentView(
+    KillteamView(
         viewModel: KillteamViewModel(
             killteamRepository: KillteamLocalRepository()))
 }

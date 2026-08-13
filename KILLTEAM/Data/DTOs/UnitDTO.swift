@@ -8,17 +8,26 @@
 struct UnitDTO : Decodable {
     
     let title: String
-    let APL: Int
+    let apl: Int
     let move: Int
     let save: Int
     let wounds: Int
+    let imageName: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case title, apl, move, save, wounds
+        
+        case imageName = "image_name"
+    }
     
     func toDomain() -> Unit {
         Unit(
             title: title,
-            APL: APL,
+            apl: apl,
             move: move,
             save: save,
-            wounds: wounds)
+            wounds: wounds,
+            imageName: imageName
+        )
     }
 }

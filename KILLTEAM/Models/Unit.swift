@@ -13,10 +13,11 @@ struct Unit : Hashable, Identifiable {
     var id: UUID
     
     let title: String
-    let APL: Int
+    let apl: Int
     let move: Int
     let save: Int
     let wounds: Int
+    let imageName: String
     
     // MARK: For UI
     let currentWounds: Int
@@ -25,18 +26,20 @@ struct Unit : Hashable, Identifiable {
     init(
         id: UUID = UUID.init(),
         title: String,
-        APL: Int,
+        apl: Int,
         move: Int,
         save: Int,
         wounds: Int,
+        imageName: String?,
         currentWounds: Int? = nil,
         imagePath: String? = nil) {
             self.id = id
             self.title = title
-            self.APL = APL
+            self.apl = apl
             self.move = move
             self.save = save
             self.wounds = wounds
+            self.imageName = imageName ?? ""
             self.currentWounds = currentWounds ?? wounds
             self.imagePath = imagePath
     }

@@ -3,52 +3,59 @@
   "squad": [
     {
       "title": "Space Marine Captain",
-      "APL": 3,
+      "apl": 3,
       "move": 6,
       "save": 3,
-      "wounds": 15
+      "wounds": 15,
+      "image_name": "sm_captain"
     },
     {
       "title": "Intercessor Sergant",
-      "APL": 3,
+      "apl": 3,
       "move": 6,
       "save": 3,
-      "wounds": 15
+      "wounds": 15,
+      "image_name": "sm_intercessor_sergeant"
     },
     {
       "title": "Assault Intercessor Warrior",
-      "APL": 3,
+      "apl": 3,
       "move": 6,
       "save": 3,
-      "wounds": 14
+      "wounds": 14,
+      "image_name": "sm_assault_intercessor_warrior"
     },
     {
       "title": "Heavy Intercessor Gunner",
-      "APL": 3,
+      "apl": 3,
       "move": 4,
       "save": 3,
-      "wounds": 14
+      "wounds": 14,
+      "image_name": "sm_heavy_intercessor_gunner"
     },
     {
       "title": "Intercessor Warrior",
-      "APL": 3,
+      "apl": 3,
       "move": 6,
       "save": 3,
-      "wounds": 14
+      "wounds": 14,
+      "image_name": "sm_intercessor_warrior_1"
     },
     {
       "title": "Intercessor Warrior",
-      "APL": 3,
+      "apl": 3,
       "move": 6,
       "save": 3,
-      "wounds": 14
+      "wounds": 14,
+      "image_name": "sm_intercessor_warrior_2"
     },
     {
       "title": "Eliminator Sniper",
-      "APL": 3,
+      "apl": 3,
       "move": 7,
       "save": 3,
-      "wounds": 12
+      "wounds": 12,
+      "image_name": "sm_eliminator_sniper"
     }
   ]
 }

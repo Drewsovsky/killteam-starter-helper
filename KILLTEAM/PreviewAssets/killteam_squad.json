@@ -1,0 +1,54 @@
+{
+  "name": "Angels of Death (starter set)",
+  "squad": [
+    {
+      "title": "Space Marine Captain",
+      "APL": 3,
+      "move": 6,
+      "save": 3,
+      "wounds": 15
+    },
+    {
+      "title": "Intercessor Sergant",
+      "APL": 3,
+      "move": 6,
+      "save": 3,
+      "wounds": 15
+    },
+    {
+      "title": "Assault Intercessor Warrior",
+      "APL": 3,
+      "move": 6,
+      "save": 3,
+      "wounds": 14
+    },
+    {
+      "title": "Heavy Intercessor Gunner",
+      "APL": 3,
+      "move": 4,
+      "save": 3,
+      "wounds": 14
+    },
+    {
+      "title": "Intercessor Warrior",
+      "APL": 3,
+      "move": 6,
+      "save": 3,
+      "wounds": 14
+    },
+    {
+      "title": "Intercessor Warrior",
+      "APL": 3,
+      "move": 6,
+      "save": 3,
+      "wounds": 14
+    },
+    {
+      "title": "Eliminator Sniper",
+      "APL": 3,
+      "move": 7,
+      "save": 3,
+      "wounds": 12
+    }
+  ]
+}

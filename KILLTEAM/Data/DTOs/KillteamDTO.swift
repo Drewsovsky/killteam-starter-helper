@@ -12,6 +12,7 @@ struct KillteamDTO : Decodable {
     func toDomain() -> Killteam {
         Killteam(
             name: name,
-            squad: squad.map{ $0.toDomain() })
+            squad: squad.map{ $0.toDomain() }
+        )
     }
 }

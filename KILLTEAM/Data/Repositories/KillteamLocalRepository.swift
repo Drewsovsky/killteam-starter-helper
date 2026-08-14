@@ -11,6 +11,8 @@ import Foundation
 protocol KillteamRepository {
     
     func fetchKillteam() async throws -> Killteam
+    
+    func fetchWeapons() async throws -> [Weapon]
 }
 
 struct KillteamLocalRepository : KillteamRepository {
@@ -28,4 +30,29 @@ struct KillteamLocalRepository : KillteamRepository {
             throw error
         }
     }
+    
+    // MARK: Mock data for testing
+    func fetchWeapons() async throws -> [Weapon] {
+        do {
+            let killteam = try await fetchKillteam()
+            return killteam.squad.first!.weapons
+        }
+        catch let error {
+            throw error
+        }
+    }
 }
+
+//
+//import Playgrounds
+//
+//#Playground {
+//    let repo = KillteamLocalRepository()
+//    do {
+//        let data = try await repo.fetchWeapons()
+//        print(data)
+//    }
+//    catch let error {
+//        print(error)
+//    }
+//}

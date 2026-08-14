@@ -7,7 +7,43 @@
       "move": 6,
       "save": 3,
       "wounds": 15,
-      "image_name": "sm_captain"
+      "image_name": "sm_captain",
+      "weapons": [
+          {
+              "name": "Plasma pistol (standard)",
+              "is_ranged": true,
+              "attacks": 4,
+              "hit": "3+",
+              "damage": "3/4",
+              "rules": [
+                  "Range 8",
+                  "Piercing 1"
+              ]
+          },
+          {
+              "name": "Plasma pistol (supercharge)",
+              "is_ranged": true,
+              "attacks": 4,
+              "hit": "3+",
+              "damage": "5/6",
+              "rules": [
+                  "Range 8",
+                  "Hot",
+                  "Lethal 5+",
+                  "Piercing 1"
+              ]
+          },
+          {
+              "name": "Power fist",
+              "is_ranged": false,
+              "attacks": 5,
+              "hit": "3+",
+              "damage": "5/7",
+              "rules": [
+                  "Brutal"
+              ]
+          }
+      ]
     },
     {
       "title": "Intercessor Sergant",

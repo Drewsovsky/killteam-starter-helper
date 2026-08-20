@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct AbilityRowView : View {
-    let ability: Ability
+    let abilities: [Ability]
     
     var body: some View {
-        Text("\(ability.name): ").fontWeight(.bold) + Text(ability.description)
+        ForEach(abilities, id: \.self) { ability in
+            Text("\(ability.name): ").fontWeight(.bold) + Text(ability.description)
+        }
     }
 }

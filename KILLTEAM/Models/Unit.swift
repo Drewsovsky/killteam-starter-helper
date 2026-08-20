@@ -19,7 +19,8 @@ struct Unit : Hashable, Identifiable {
     let wounds: Int
     let imageName: String
     
-    let weapons: [Weapon]
+    let weapons: [Weapon]?
+    let abilities: [Ability]?
     
     // MARK: For UI
     var currentWounds: Int
@@ -34,7 +35,8 @@ struct Unit : Hashable, Identifiable {
         wounds: Int,
         imageName: String?,
         currentWounds: Int? = nil,
-        weapons: [Weapon]? = nil
+        weapons: [Weapon]? = nil,
+        abilities: [Ability]? = nil,
         //imagePath: String? = nil
         ) {
             self.id = id
@@ -46,6 +48,7 @@ struct Unit : Hashable, Identifiable {
             self.imageName = imageName ?? ""
             self.currentWounds = currentWounds ?? wounds
             self.weapons = weapons ?? []
+            self.abilities = abilities ?? []
             //self.imagePath = imagePath
     }
     

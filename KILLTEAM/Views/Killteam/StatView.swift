@@ -53,7 +53,12 @@ struct StatView: View {
                         Button("+") { onWoundsChange(1) }
                     }
                 }
-                WeaponRowView(weapons: unit.weapons)
+                WeaponRowView(weapons: unit.weapons ?? [])
+                if let abilities = unit.abilities, !abilities.isEmpty {
+                    ForEach(abilities, id: \.self) { ability in
+                        AbilityRowView(ability: ability)
+                    }
+                }
             }
             .padding()
         }

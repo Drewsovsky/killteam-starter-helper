@@ -16,9 +16,10 @@ struct UnitDTO : Decodable {
     let wounds: Int
     let imageName: String?
     let weapons: [WeaponDTO]?
+    let abilities: [AbilityDTO]?
     
     enum CodingKeys: String, CodingKey {
-        case title, apl, move, save, wounds, weapons
+        case title, apl, move, save, wounds, weapons, abilities
         
         case imageName = "image_name"
     }
@@ -32,7 +33,8 @@ struct UnitDTO : Decodable {
             save: save,
             wounds: wounds,
             imageName: imageName,
-            weapons: weapons?.map { $0.toDomain() }
+            weapons: weapons?.map { $0.toDomain() },
+            abilities: abilities?.map { $0.toDomain() }
         )
     }
 }

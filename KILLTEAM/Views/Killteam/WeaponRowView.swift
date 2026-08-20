@@ -38,7 +38,3 @@ struct WeaponRowView: View {
         .padding(.vertical)
     }
 }
-
-//#Preview {
-//    WeaponRowView(repository: KillteamLocalRepository())
-//}

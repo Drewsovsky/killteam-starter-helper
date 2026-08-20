@@ -43,6 +43,12 @@
                   "Brutal"
               ]
           }
+      ],
+      "abilities": [
+          {
+              "name": "Shock Assault",
+              "description": "This operative can perform two Fight actions diring its activation."
+          }
       ]
     },
     {
@@ -51,7 +57,13 @@
       "move": 6,
       "save": 3,
       "wounds": 15,
-      "image_name": "sm_intercessor_sergeant"
+      "image_name": "sm_intercessor_sergeant",
+      "abilities": [
+          {
+              "name": "Bolter Discipline",
+              "description": "This operative can perform two Shoot actions during activation."
+          }
+      ]
     },
     {
       "title": "Assault Intercessor Warrior",
@@ -59,7 +71,13 @@
       "move": 6,
       "save": 3,
       "wounds": 14,
-      "image_name": "sm_assault_intercessor_warrior"
+      "image_name": "sm_assault_intercessor_warrior",
+      "abilities": [
+          {
+              "name": "Shock Assault",
+              "description": "This operative can perform two Fight actions during its activation."
+          }
+      ]
     },
     {
       "title": "Heavy Intercessor Gunner",
@@ -67,7 +85,13 @@
       "move": 4,
       "save": 3,
       "wounds": 14,
-      "image_name": "sm_heavy_intercessor_gunner"
+      "image_name": "sm_heavy_intercessor_gunner",
+      "abilities": [
+          {
+              "name": "Bolter Discipline",
+              "description": "This operative can perform two Shoot actions during activation."
+          }
+      ]
     },
     {
       "title": "Intercessor Warrior",
@@ -75,7 +99,13 @@
       "move": 6,
       "save": 3,
       "wounds": 14,
-      "image_name": "sm_intercessor_warrior_1"
+      "image_name": "sm_intercessor_warrior_1",
+      "abilities": [
+          {
+              "name": "Bolter Discipline",
+              "description": "This operative can perform two Shoot actions during activation."
+          }
+      ]
     },
     {
       "title": "Intercessor Warrior",
@@ -83,7 +113,13 @@
       "move": 6,
       "save": 3,
       "wounds": 14,
-      "image_name": "sm_intercessor_warrior_2"
+      "image_name": "sm_intercessor_warrior_2",
+      "abilities": [
+          {
+              "name": "Bolter Discipline",
+              "description": "This operative can perform two Shoot actions during activation."
+          }
+      ]
     },
     {
       "title": "Eliminator Sniper",

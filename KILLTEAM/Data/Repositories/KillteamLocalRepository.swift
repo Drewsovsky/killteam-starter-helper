@@ -35,7 +35,7 @@ struct KillteamLocalRepository : KillteamRepository {
     func fetchWeapons() async throws -> [Weapon] {
         do {
             let killteam = try await fetchKillteam()
-            return killteam.squad.first!.weapons
+            return killteam.squad.first!.weapons!
         }
         catch let error {
             throw error

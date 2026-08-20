@@ -31,17 +31,20 @@ struct SquadContentView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     ForEach(squad) { unit in
-                        Button {
-                            withAnimation {
-                                selectedUnitID = unit.id
+                        VStack(spacing: 0) {
+                            Button {
+                                withAnimation {
+                                    selectedUnitID = unit.id
+                                }
+                            } label: {
+                                Text(unit.title.prefix(1))
+                                    .frame(width: 50, height: 50)
+                                    .background(
+                                        selectedUnitID == unit.id ? .green : .black
+                                    )
+                                    .foregroundColor(.white)
                             }
-                        } label: {
-                            Text(unit.title.prefix(1))
-                                .frame(width: 50, height: 50)
-                                .background(
-                                    selectedUnitID == unit.id ? .green : .black
-                                )
-                                .foregroundColor(.white)
+                            ProgressView(value: Double(unit.currentWounds) / Double(unit.wounds)).progressViewStyle(.linear)
                         }
                     }
                 }

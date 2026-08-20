@@ -52,6 +52,7 @@ struct StatView: View {
                     Text("\(unit.currentWounds)/\(unit.wounds)")
                     Button("+") { onWoundsChange(1) }
                 }
+                ProgressView(value: 0.2).progressViewStyle(.linear)
             }
             
             if let weapons = unit.weapons, !weapons.isEmpty {

@@ -49,7 +49,6 @@ struct SquadContentView: View {
             }
         }
         .frame(height: 60)
-        .background(.orange)
     }
 
     private var dataCardsPager: some View {
@@ -74,6 +73,5 @@ struct SquadContentView: View {
             .scrollPosition(id: $selectedUnitID)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(.cyan)
-    }    
+    }
 }
